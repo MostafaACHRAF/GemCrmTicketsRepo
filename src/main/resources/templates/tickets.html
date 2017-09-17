@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator="template"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+	  
+	<head>
+		<meta charset="utf-8" />
+		<title>GCT - Tickets</title>
+		<link rel="stylesheet" th:href="@{/css/formTickets.css}" />
+		<link rel="stylesheet" th:href="@{/css/ticket.css}" />
+		<script type="text/javascript" th:src="@{/js/tickets.js}"></script>
+	</head>
+	
+	<body>
+	
+		<div layout:fragment="contentHeader">
+			<h1>List of all Tickets</h1>
+			<ol class="breadcrumb">
+				<li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+	            <li class="active">Tickets</li>
+	        </ol>
+		</div>
+	
+		<div layout:fragment="content">
+		
+			<div class="col-md-8 searchBar">
+				<div class="input-group">
+					<input id="key" type="text" name="key" placeholder="Search Tickets by subject, description or solution words..."  class="form-control" />
+					<div class="input-group-addon">
+						<span class="glyphicon glyphicon-search"></span>
+					</div>
+				</div>
+			</div> <!-- end col-md-8 -->
+			
+			<div class="col-md-3 radion-box">
+				
+				<div id="radioBox" class="btn-group" data-toggle="buttons">
+					<label id="all" class="btn btn-primary active" data-toggle="tooltip" title="All">
+						<input type="radio" name="options" value="all" autocomplete="off" />
+						<span class="glyphicon glyphicon-ok"></span>
+					</label>
+		
+					<label id="opened" class="btn btn-danger" data-toggle="tooltip" title="Opened">
+						<input type="radio" name="options" value="opened" autocomplete="off" />
+						<span class="glyphicon glyphicon-ok"></span>
+					</label>
+		
+					<label id="in_progress" class="btn btn-warning" data-toggle="tooltip" title="In Progress">
+						<input type="radio" name="options" value="in_progress" autocomplete="off" />
+						<span class="glyphicon glyphicon-ok"></span>
+					</label>
+					
+					<label id="closed" class="btn btn-success" data-toggle="tooltip" title="Closed">
+						<input type="radio" name="options" value="closed" autocomplete="off" />
+						<span class="glyphicon glyphicon-ok"></span>
+					</label>
+				</div> <!-- end btn-group -->
+				
+			</div> <!-- end col-md-3 -->
+			
+			<div class="addTicketBtn col-md-1">
+				<a class="btn btn-success pull-right" th:href="@{/agent/{id}/edit/ticket(id = ${session.agentProfile.id})}">
+					<span class="glyphicon glyphicon-plus"></span> &nbsp; new Ticket
+				</a>
+			</div> <!-- end col-md-1 -->
+			
+			<div class="table-container">
+				<table id="mainTable" class="table table-responsive table-striped" style="margin-top: 25px;">
+					<thead>
+						<tr>
+							<th>Id</th>
+							<th>Subject</th>
+							<th>Description</th>
+							<th>Solution</th>
+							<th>Company</th>
+							<th>Status</th>
+							<th>Activity type</th>
+							<th>Created at</th>
+							<th>Updated at</th>
+							<th>Modify</th>
+							<th sec:authorize="hasRole('ROLE_adm')">Delete</th>
+							<th>Details</th>
+							<th>Assign</th>
+						</tr>
+					</thead>
+					
+					<tbody>
+						<tr th:each="ticket:${listTickets}">
+							<td th:text="${ticket.id}"></td>
+							<td th:text="${ticket.subject}"></td>
+							<td th:text="${ticket.description}"></td>
+							<td th:text="${ticket.solution}"></td>
+							<td th:text="${ticket.company}"></td>
+							<td th:switch="${ticket.status}">
+								<span class="label label-danger status" th:case="opened" th:text="${ticket.status}"></span>
+								<span class="label label-warning status" th:case="in_progress" th:text="${ticket.status}"></span>
+								<span class="label label-success status" th:case="closed" th:text="${ticket.status}"></span>
+							</td>
+							<!-- <td th:class="${ticket.status == 'opened' ? 'label label-success status' : ''}" th:text="${ticket.status}"></td> -->
+							<td th:text="${ticket.activity_type}"></td>
+							<td th:text="${ticket.created_at != null ? #dates.format(ticket.created_at, 'dd/MM/YYYY') : '' }"></td>
+							<td th:text="${ticket.updated_at != null ? #dates.format(ticket.updated_at, 'dd/MM/YYYY') : '' }"></td>
+							<td>
+								<a th:if="${ticket.status != 'closed' or session.agentProfile.class.simpleName == 'Admin'}" th:href="@{/agent/{id}/edit/ticket/{ticket_id}(id = ${session.agentProfile.id}, ticket_id = ${ticket.id} )}">
+									<span class="glyphicon glyphicon-pencil"></span>
+								</a>
+							</td>
+							<td sec:authorize="hasRole('ROLE_adm')"><a th:attr="admin_id = ${session.agentProfile.id}, ticket_id = ${ticket.id}" class="deleteTicket"><span class="glyphicon glyphicon-trash"></span></a></td>
+							<td><a th:href="@{/agent/{id}/show/ticket/{component_id}/details(id = ${session.agentProfile.id}, component_id = ${ticket.id} )}"><span class="glyphicon glyphicon-eye-open"></span></a></td>
+							<td><a th:if="${ticket.status != 'closed'}" th:href="@{/agent/{id}/assign/ticket/{ticket_id}/to(id = ${session.agentProfile.id}, ticket_id = ${ticket.id})}"><span class="glyphicon glyphicon-link"></span></a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div> <!-- end table-container -->
+				
+			<!-- pagination system -->
+			<nav aria-label="Page navigation example">
+				<ul class="pagination">
+					<li class="page-item"><a class="page-link" th:href="@{/agent/{id}/show/tickets(id = ${session.agentProfile.id} , page=${currentPage - 1}, size=${size})}" th:if="${currentPage - 1} >= 0">Previous</a></li>
+				    <li class="page-item" th:class="${currentPage} == ${pages[__status.index__]} ? 'active' : ''" th:each="pa,status:${pages}"><a class="page-link" th:href="@{/agent/{id}/show/tickets(id = ${session.agentProfile.id} , page=${pages[__status.index__]}, size=${size})}" th:text="${pages[__status.index__] + 1}"></a></li>
+				    <li class="page-item"><a class="page-link" th:href="@{/agent/{id}/show/tickets(id = ${session.agentProfile.id} , page=${currentPage + 1}, size=${size})}" th:if="${taille > currentPage + 1}">Next</a></li>
+				</ul>
+			</nav>
+			
+			
+			<div class="ticketsStatisticsChart">
+				<canvas id="myChart"></canvas>
+			</div>
+			
+			
+			<!-- assignedTickets modal -->
+			<div th:replace="fragments/tickets/assignedTicketsModal :: assignedTicketsModal"></div>
+			
+			
+			<!-- edit ticket modal -->
+			<div th:replace="fragments/tickets/myModal :: myModal"></div>
+			
+			
+			<!-- ticketDetails modal -->
+			<div th:replace="fragments/tickets/ticketDetailsModal :: ticketDetailsModal"></div>
+		
+		
+			<!-- ticketDetails modal -->
+			<div th:replace="fragments/tickets/assignTicketToModal :: assignTicketToModal"></div>
+		
+		
+			
+			<div th:replace="fragments/tickets/agentProfileModal :: agentProfileModal"></div>
+			
+			
+			<div th:replace="fragments/tickets/changePassModal :: changePassModal"></div>
+			
+			<p id="profileUpdatedMsg" th:attr="profileUpdatedResult=${profileUpdated}"></p>
+			
+			
+	</div> <!-- end content fragment -->
+	
+	</body>
+	
+</html>

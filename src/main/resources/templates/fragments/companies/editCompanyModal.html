@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="utf-8" />
+	</head>
+
+	<body>
+		
+		<!-- #################################################################################################################### -->
+		<!-- #################################################################################################################### -->
+		<!-- #################################################################################################################### -->
+		<!-- ################################################## editCompanyModal ################################################ -->
+		
+		<div th:fragment="editCompanyModal" th:attr="action = ${action}, saveCompanyWithSuccess = ${m_CompSuccess}" class="modal fade" id="editCompanyModal" role="dialog">
+			
+			<div th:if="${company}" class="modal-dialog" style="width: 1000px !important;">
+				
+				<form th:action="@{/admin/{id}/save/company(id = ${session.agentProfile.id})}" method="post">
+					
+					<div class="modal-content"> <!-- Modal content-->
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+								<h4 class="modal-title">
+									<span th:text="${#strings.capitalize(action)}"></span> Company <span th:text="${action == 'update' ? 'number' + company.id : '' }"></span>
+								</h4>
+							</div> <!-- end modal-header -->
+							
+							<div class="modal-body" >
+							
+								<div class="row">
+								
+									<!-- ########################################### company id input ########################################### -->
+									
+									<div th:if="${action == 'update'}" class="col-md-4">
+										<div class="form-group">
+											<label for="idInput">Identifier</label>
+											<input id="idInput" type="text" name="id" th:value="${company.id}" class="form-control" readonly="readonly" />
+										</div> <!-- end form-group 1 -->
+									</div> <!-- end col-md-4 (1) -->
+								
+									<!-- ########################################### company name input ########################################### -->
+								
+									<div class="col-md-4">
+										<div class="form-group">
+											<label for="nameInput">Name</label>
+											<input id="nameInput" type="text" name="name" th:value="${company.name}" placeholder="Company Name"  class="form-control" />
+											<span class="errorSpan" th:errors="${company.name}"></span>
+										</div> <!-- end form-group 1 -->
+									</div> <!-- end col-md-4 (2) -->
+									
+									<!-- ########################################### company email input ########################################### -->
+									
+									<div class="col-md-4">
+										<div class="form-group">
+											<label for="emailInput">Email</label>
+											<input id="emailInput" type="text" name="email" th:value="${company.email}" placeholder="Address mail" class="form-control" />
+											<span class="errorSpan" th:errors="${company.email}"></span>
+										</div> <!-- end form-group 1 -->
+									</div> <!-- end col-md-4 (3) -->
+								
+								</div> <!-- end row1 -->
+								
+								
+								<div class="row">
+								
+									<!-- ########################################### company logo input ########################################### -->
+								
+									<div class="col-md-4">
+										<div class="form-group">
+											<label for="logoInput">Company Logo</label>
+											<input id="logoInput" type="file" name="logo" th:value="${company.logo}" class="file" data-preview-file-type="jpg" readonly="readonly" />
+											<span class="errorSpan" th:errors="${company.logo}"></span>
+										</div>
+									</div>
+									
+									<!-- ########################################### company legal status select ########################################### -->
+									
+									<div class="col-md-4">
+										<div class="form-group">
+											<label for="legalStatusSelect">Legal Status</label>
+											<select id="legalStatusSelect" name="legal_status" class="form-control">
+												<option value="SARL" th:selected="${company.legal_status == 'SARL'}">SARL</option>
+												<option value="SA" th:selected="${company.legal_status == 'SA'}">SA</option>
+											</select>
+										</div>
+									</div>
+									
+									<!-- ########################################### company sector select ########################################### -->
+									
+									<div class="col-md-4">
+										<div class="form-group">
+											<label for="sectorSelect">Sector</label>
+											<select id="sectorSelect" name="sector" class="form-control">
+												<option value="technology" th:selected="${company.sector == 'technology'}">Technology</option>
+												<option value="media" th:selected="${company.sector == 'media'}">Media</option>
+											</select>
+										</div>
+									</div>
+									
+								</div> <!-- end row2 -->
+								
+								<div class="row">
+									
+									<!-- ########################################### company nationality select ########################################### -->
+									
+									<div class="col-md-4">
+										<div class="form-group">
+											<label for="nationalitySelect">Nationality</label>
+											<select id="nationalitySelect" name="nationality" class="form-control">
+												<option value="morocco" th:selected="${company.nationality == 'morocco'}">Morocco</option>
+												<option value="egypt" th:selected="${company.nationality == 'egypt'}">Egypt</option>
+												<option value="canada" th:selected="${company.nationality == 'canada'}">Canada</option>
+												<option value="united State" th:selected="${company.nationality == 'united State'}">United State</option>
+												<option value="united Kingdom" th:selected="${company.nationality == 'united Kingdom'}">United Kingdom</option>
+												<option value="germany" th:selected="${company.nationality == 'germany'}">Germany</option>
+												<option value="belgium" th:selected="${company.nationality == 'belgium'}">Belgium</option>
+												<option value="french" th:selected="${company.nationality == 'french'}">French</option>
+												<option value="italy" th:selected="${company.nationality == 'italy'}">Italy</option>
+												<option value="spain" th:selected="${company.nationality == 'spain'}">Spain</option>
+											</select>
+										</div>
+									</div>
+									
+									<!-- ########################################### company turnover select ########################################### -->
+									
+									<div class="col-md-4">
+										<div class="form-group">
+											<label for="turnoverInput">Turnover</label>
+											<div class="input-group">
+											  <input id="turnoverInput" type="text" name="turnover" th:value="${#numbers.formatDecimal(company.turnover, 0, 2, 'POINT')}" placeholder="Turnover"  class="form-control" />
+				                              <div class="input-group-addon">
+				                                 <span class="glyphicon glyphicon-euro"></span>
+				                              </div>
+				                              </div>
+											
+											<span class="errorSpan" th:errors="${company.turnover}"></span>
+										</div> <!-- end form-group 1 -->
+									</div> <!-- end col-md-4 (2) -->
+									
+									<!-- ########################################### company employees input ########################################### -->
+									
+									<div class="col-md-4">
+										<div class="form-group">
+											<label for="employeesInput">Employees</label>
+											<input id="employeesInput" type="text" name="number_employees" th:value="${company.number_employees}" placeholder="Number of Employees" class="form-control" />
+											<span class="errorSpan" th:errors="${company.number_employees}"></span>
+										</div> <!-- end form-group 1 -->
+									</div> <!-- end col-md-4 (3) -->
+								
+								</div> <!-- end row3 -->
+								
+								<div class="row">
+								
+									<!-- ########################################### company address input ########################################### -->
+									
+									<div class="col-md-4">
+										<div class="form-group">
+											<label for="addressInput">Address</label>
+											<textarea id="addressInput" rows="10" cols="10" name="address" th:text="${company.address}" placeholder="Enter the Company address here..." class="form-control"></textarea>
+											<span class="errorSpan" th:errors="${company.address}"></span>
+										</div> <!-- end form-group 1 -->
+									</div> <!-- end col-md-4 (3) -->
+								
+								</div> <!-- end row4 -->
+								
+								<!-- ########################################### hidden inputs ########################################### -->
+							
+								<input type="hidden" name="action" th:value="${action}" />
+								
+								<input type="hidden" name="visibility" th:value="1" />
+								
+							</div> <!-- end modal-body -->
+							
+							<div class="modal-footer">
+								<button type="submit" class="btn btn-success" id="saveCompany">Save</button>
+								<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+							</div>
+							
+					</div> <!-- end modal-content -->
+					
+				</form>
+				
+			</div> <!-- end modal-dialog -->
+			
+		</div> <!-- end modal fade -->
+		
+		<!-- ############################################### end editCompanyModal ############################################### -->
+		<!-- #################################################################################################################### -->
+		<!-- #################################################################################################################### -->
+		<!-- #################################################################################################################### -->
+		
+	</body>
+	
+</html>

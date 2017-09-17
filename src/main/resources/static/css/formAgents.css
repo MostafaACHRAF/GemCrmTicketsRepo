@@ -1,0 +1,8 @@
+.errorSpan {
+	color: red;
+	font-size: 12px;
+}
+
+.deleteAgent:hover {
+	cursor: pointer;
+}

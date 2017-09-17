@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+	<head>
+		<meta charset="utf-8" />
+	</head>
+	
+	<body>
+	
+		<!-- #################################################################################################################### -->
+		<!-- #################################################################################################################### -->
+		<!-- #################################################################################################################### -->
+		<!-- ############################################## edit AssignTicketModal ############################################## -->
+		
+		
+		<div th:fragment="assignTicketToModal" th:attr="action=${action}" class="modal fade" id="assignTicketToModal" role="dialog">
+			<div th:attr="assignTicketWithSuccess = ${a_TickSuccessMsg}" th:if="${ticket}" class="modal-dialog">
+				<form id="assignToForm" th:if="${ticket}" th:action="@{/agent/{id}/assign/ticket/{ticket_id}/to(id = ${session.agentProfile.id}, ticket_id = ${ticket.id} )}" method="post">
+				<div class="modal-content"> <!-- Modal content-->
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">
+								Assign Ticket number <span th:text="${ticket.id}"></span> To ...
+							</h4>
+						</div> <!-- end modal-header -->
+						
+						<div class="modal-body" >
+							<div class="col-md-6">
+								<h4>This Ticket Already Assigned to</h4>
+								<ul>
+									<li th:each="operation:${ticketAssignedTo}" th:text="'To : ' + ${ agentRepository.findOne(operation.to_agent).name } + ' at : ' + ${operation.created_at} + ' by : ' + ${operation.agent.name} "></li>
+								</ul>
+							</div> <!-- end col-md-6 (1) -->
+							
+							<div class="col-md-6">
+								<div class="form-group">
+									<select id="assignToSelect" name="assignTo" class="form-control">
+										<option value="all">All</option>
+										<option value="team">Team</option>
+										<option value="agents">Agents</option>
+									</select>
+									<span class="errorSpan" th:text="${assignToError}"></span>
+								</div>
+								
+								<div class="form-group">
+									<select name="toAgent" id="toAgentSelect" class="form-control">
+										<option th:each="agent:${listAgents}" th:value="${agent.id}" th:text="${agent.id == session.agentProfile.id ? 'To me' : agent.name}"></option>
+									</select>
+								</div>
+								
+								<div class="form-group">
+									<select id="toTeamSelect" name="toTeam" class="form-control">
+										<option value="dev">Developers</option>
+										<option value="sup">Supports</option>
+									</select>
+								</div>
+							</div> <!-- end col-md-6 (2) -->
+							
+						<!-- ########################################### hidden inputs ########################################### -->
+							
+							<input type="hidden" name="action" th:value="${action}" />
+						
+						</div> <!-- end modal-body -->
+						
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-success" id="saveCompte">Assign</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+						</div>
+						
+			    </div> <!-- end modal-content -->
+			    
+			    </form>
+			    
+			</div> <!-- end modal-dialog -->
+			
+		</div> <!-- end modal fade -->
+		
+		<!-- ############################################# end AssignTicketModal ################################################ -->
+		<!-- #################################################################################################################### -->
+		<!-- #################################################################################################################### -->
+		<!-- #################################################################################################################### -->
+	
+	</body>
+</html>

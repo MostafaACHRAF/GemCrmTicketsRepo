@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+	<meta charset="utf-8" />
+	</head>
+	
+	<body>
+		
+		<!-- #################################################################################################################### -->
+		<!-- #################################################################################################################### -->
+		<!-- #################################################################################################################### -->
+		<!-- ################################################## editAgentModal ################################################## -->
+		
+		<div th:fragment="editAgentModal" th:attr="action=${action}, saveAgentWithSuccess = ${m_AgSuccessMsg}" class="modal fade" id="myModal" role="dialog">
+			<div class="modal-dialog" style="width: 1000px !important;">
+				
+				<form th:if="${agent}" th:action="@{/admin/{admin_id}/save/{role}(admin_id = ${session.agentProfile.id}, role = ${role})}" method="post">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">
+							<span th:text="${#strings.capitalize(action)}"></span> <span th:text="${role}"></span> Account :
+						</h4>
+					</div>
+					
+					<div class="modal-body" >
+						
+							<p class="text-danger">(*) All fields are required !</p>
+							
+							<!-- ########################################### agent id input ########################################### -->
+							
+							<div class="row">
+							
+							<div th:if="${action == 'update'}" class="col-md-3">
+								<div class="form-group">
+									<label for="idInput">Identifier</label>
+									<input id="idInput" type="text" name="id" th:value="${agent.id}" class="form-control"  readonly="readonly" />
+									<span class="errorSpan" th:errors="${agent.id}"></span>
+								</div>
+							</div>
+			
+							<!-- ########################################### agent name input ########################################### -->
+							
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="nameInput">Name</label>
+									<input id="nameInput" type="text" name="name" th:value="${agent.name}" placeholder="Name" class="form-control" />
+									<span class="errorSpan" th:errors="${agent.name}"></span>
+								</div>
+							</div>
+			
+							<!-- ########################################### agent lastName input ########################################### -->
+							
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="lastNameInput">Last Name</label>
+									<input id="lastNameInput" type="text" name="lastName" th:value="${agent.lastName}" placeholder="Last Name" class="form-control" />
+									<span class="errorSpan" th:errors="${agent.lastName}"></span>
+								</div>
+							</div>
+			
+							<!-- ########################################### agent image input ########################################### -->
+							
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="imageInput">Profile Image</label>
+									<div>
+										<input id="imageInput" name="image" type="file" class="file" th:readonly="${session.agentProfile.class.simpleName == 'Admin'}" />
+									</div> end file loading
+									
+									<span class="errorSpan" th:errors="${agent.image}"></span>
+								</div>
+							</div>
+		
+						</div> <!-- end row 1 -->
+						
+						<!-- ########################################### agent birthDate input ########################################### -->
+						
+						<div class="row">
+						
+							 <div class='col-md-3'>
+							 	<div class="form-group">
+							 		<label for="birthDateInput">Birth Date</label>
+						        	<div class='input-group date' id='datetimepicker1'>
+						        		<input id="birthDateInput" type='text' name="birthDate" th:value="${agent.birthDate != null ? #dates.format(agent.birthDate, 'dd/MM/yyyy') : ''}" class="form-control" /> 
+						                <span class="input-group-addon">
+						                	<span class="glyphicon glyphicon-calendar"></span>
+						                </span>           
+						            </div>                
+						        </div>
+						        <span class="errorSpan" th:errors="${agent.birthDate}"></span>
+						    </div>
+			
+							<!-- ########################################### agent email input ########################################### -->
+							
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="emailInput">Address mail</label>
+									<input id="emailInput" type="text" name="email" th:value="${agent.email}" placeholder="Email" class="form-control" />
+									<span class="errorSpan" th:errors="${agent.email}"></span>
+								</div>
+							</div>
+			
+							<!-- ########################################### agent password input ########################################### -->
+							
+							<div class="col-md-3">
+								<div class="form-group">
+								<label for="passwordInput">Password</label>
+		                           <div class="input-group">
+		                              <div class="input-group-addon">
+		                                 <span class="glyphicon glyphicon-lock"></span>
+		                              </div>
+		                              <input id="passwordInput" type="password" name="password" th:value="${agent.password}" placeholder="Password" class="form-control" />
+		                              <span class="input-group-btn">
+		                                 <a href="#" class="btn btn-default btn-md" id="showhide1" data-val='1'><span id='eye1' class="glyphicon glyphicon-eye-open"></span></a>
+		                              </span>
+		                           </div>
+		                           <span class="errorSpan" th:errors="${agent.password}"></span>
+                        		</div>
+							</div>
+		
+							<!-- ########################################### agent confirmPassword input ########################################### -->
+							
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="confirmPasswordInput">Confirm Password</label>
+									<div class="input-group">
+		                              <div class="input-group-addon">
+		                                 <span class="glyphicon glyphicon-lock"></span>
+		                              </div>
+		                              <input id="confirmPasswordInput" type="password" name="confirmPassword" th:value="${agent.confirmPassword}" placeholder="Confirm Password" class="form-control" />
+		                              <span class="input-group-btn">
+		                                 <a href="#" class="btn btn-default btn-md" id="showhide2" data-val='1'><span id='eye2' class="glyphicon glyphicon-eye-open"></span></a>
+		                              </span>
+		                           </div>
+		                           <span class="errorSpan" th:errors="${agent.confirmPassword}"></span>
+								</div>
+								
+							</div>
+		
+						</div> <!-- end row 2 -->
+						
+						<!-- ########################################### agent office_number input ########################################### -->
+						
+						<div class="row">
+						
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="officeNumberInput">Office Number</label>
+									<input id="officeNumberInput" type="text" name="office_number" th:value="${agent.office_number}" placeholder="Office number" class="form-control" />
+									<span class="errorSpan" th:errors="${agent.office_number}"></span>
+								</div>
+							</div>
+			
+							<!-- ########################################### agent office_tel input ########################################### -->
+							
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="officeTelInput">Office Tel</label>
+									<input id="officeTelInput" type="text" name="office_tel" th:value="${agent.office_tel}" placeholder="Office tel" class="form-control" />
+									<span class="errorSpan" th:errors="${agent.office_tel}"></span>
+								</div>
+							</div>
+			
+							<!-- ########################################### agent salary input ########################################### -->
+							
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="salaryInput">Salary</label>
+									<input type="text" name="salary" th:value="${agent.salary}" placeholder="Salary" class="form-control" />
+									<span class="errorSpan" th:errors="${agent.salary}"></span>
+								</div>
+							</div>
+			
+							<!-- ########################################### agent formation input ########################################### -->
+							
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="formationInput">Formation</label>
+									<input id="formationInput" type="text" name="formation" th:value="${agent.formation}" placeholder="Enter your formation here..." class="form-control" ></input>
+									<span class="errorSpan" th:errors="${agent.formation}"></span>
+								</div>
+							</div>
+		
+							</div> <!-- end row 3 -->
+							
+							<!-- ########################################### agent cv input ########################################### -->
+						
+							<div class="row">
+							
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="cvInput">Cv</label>
+									<input id="cvInput" type="file" name="cv" th:value="${agent.cv}" class="file" data-preview-file-type="text" th:readonly="${session.agentProfile.class.simpleName == 'Admin'}" />
+								</div>
+							</div>
+			
+							<!-- ########################################### agent contract_type input ########################################### -->
+							
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="contractTypeSelect">Contract Type</label>
+									<select id="contractTypeSelect" name="contract_type" class="form-control">
+										<option value="CDI" th:selected="${agent.contract_type == 'CDI'}">CDI</option>
+										<option value="CDD" th:selected="${agent.contract_type == 'CDD'}">CDD</option>
+									</select>
+								</div>
+							</div>
+			
+							<!-- ########################################### agent start/end date picker inputs ########################################### -->
+							
+							<div class='col-md-3'>
+						        <div class="form-group">
+						        	<label for="startDateInput">Contract Start Date</label>
+						            <div class='input-group date' id='datetimepicker6'>
+						                <input id="startDateInput" type='text' name="start_date" th:value="${agent.start_date != null ? #dates.format(agent.start_date, 'DD/MM/YYYY') : ''}" class="form-control" />
+						                <span class="input-group-addon">
+						                    <span class="glyphicon glyphicon-calendar"></span>
+						                </span>
+						            </div>
+						        </div>
+						        <span class="errorSpan" th:errors="${agent.start_date}"></span>
+					    	</div>
+					    	
+					    	<div class="col-md-3">
+					    		<div class="form-group">
+					    			<label for="endDateInput">Contract End Date</label>
+						            <div class='input-group date' id='datetimepicker7'>
+						                <input id="endDateInput" type='text' name="end_date" th:value="${agent.end_date != null ? #dates.format(agent.end_date, 'DD/MM/YYYY') : ''}" class="form-control" />
+						                <span class="input-group-addon">
+						                    <span class="glyphicon glyphicon-calendar"></span>
+						                </span>
+						            </div>
+						            <span class="errorSpan" th:errors="${agent.end_date}"></span>
+						        </div>
+					    	</div>
+					    	
+					    	</div> <!-- end row 4 -->
+    	
+				    	<!-- ########################################### hidden inputs ########################################### -->
+							
+						
+						<input type="hidden" name="visibility" value="1" />
+						
+						
+						<input type="hidden" name="admin_id" value="3" />
+						
+						
+						<input type="hidden" name="action" th:value="${action}" />
+						
+						
+						<input type="hidden" name="role" th:value="${role}" />
+						
+						<input type="hidden" name="page" th:value="${currentPage}" />
+						
+						<input type="hidden" name="size" th:value="${size}" />
+								
+					</div> <!-- end modalBody -->
+					
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-success" id="saveCompte">Save</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					</div>
+				</div> <!-- end modal-content -->
+				</form>
+				
+			</div> <!-- end modal-dialog -->
+		</div> <!-- end modal fade -->
+		
+		<!-- ################################################ end editAgentModal ################################################ -->
+		<!-- #################################################################################################################### -->
+		<!-- #################################################################################################################### -->
+		<!-- #################################################################################################################### -->
+		
+	</body>
+
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator="template"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+	  
+	<head>
+		<meta charset="utf-8" />
+		<title>GCT - Agents</title>
+		<link rel="stylesheet" th:href="@{/css/formAgents.css}" />
+		<link rel="stylesheet" th:href="@{/css/agents.css}" />
+		<script type="text/javascript" th:src="@{/js/agents.js}"></script>
+	</head>
+<body>
+
+	<div layout:fragment="contentHeader">
+		<h1>List of all Agents</h1>
+		<ol class="breadcrumb">
+			<li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+	        <li class="active">Agents</li>
+	    </ol>
+	</div>
+		
+		
+	<div layout:fragment="content">
+	
+		<div class="col-md-8 searchBar">
+			<div class="input-group">
+				<input id="key" type="text" name="name" placeholder="Search Agents by name or lastName..."  class="form-control" />
+				<div class="input-group-addon">
+					<span class="glyphicon glyphicon-search"></span>
+				</div>
+			</div>
+		</div> <!-- end col-md-8 -->
+			
+		
+		<div class="col-md-2"></div> <!-- end col-md-2 -->
+			
+		
+		<div class="col-md-2 dropdown pull-right addAgentsBtn">
+		  <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+		    Add new agent
+		    <span class="caret"></span>
+		  </button>
+		  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+		    <li><a th:href="@{/admin/{admin_id}/edit/developer(admin_id = ${session.agentProfile.id})}">Developer</a></li>
+		    <li><a th:href="@{/admin/{admin_id}/edit/support(admin_id = ${session.agentProfile.id})}">Support</a></li>
+		    <li><a th:href="@{/admin/{admin_id}/edit/admin(admin_id = ${session.agentProfile.id})}">Administrator</a></li>
+		  </ul>
+		</div>
+		
+		
+		<table id="mainTable" class="table table-striped">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Email</th>
+					<th>Name</th>
+					<th>Last name</th>
+					<th>Birth date</th>
+					<th>Age</th>
+					<th>Post</th>
+					<th>Salary</th>
+					<th>Office number</th>
+					<th>Modify</th>
+					<th>Delete</th>
+					<th>Details</th>
+				</tr>
+			</thead>
+			
+			<tbody>
+				<tr th:each="agent:${listAgents}" th:if="${agent.id != session.agentProfile.id}">
+					<td th:text="${agent.id}"></td>
+					<td th:text="${agent.email}"></td>
+					<td th:text="${#strings.capitalize(agent.name)}"></td>
+					<td th:text="${#strings.toUpperCase(agent.lastName)}"></td>
+					<td th:text="${#dates.format(agent.birthDate, 'dd/MM/yyyy')}"></td>
+					<td th:text="${agent.age}"></td>
+					<td th:text="${agent.class.simpleName}"></td>
+					<td th:text="${agent.salary}"></td>
+					<td th:text="${agent.office_number}"></td>
+					<td>
+						<a class="editAgent" th:href="@{/admin/{admin_id}/edit/{agent}/{agent_id}(admin_id = ${session.agentProfile.id}, agent_id = ${agent.id}, agent = ${#strings.toLowerCase(agent.class.simpleName)} )}">
+							<span class="glyphicon glyphicon-pencil"></span>
+						</a>
+					</td>
+					<td>
+						<a class="deleteAgent" th:attr="admin_id = ${session.agentProfile.id}, agent_id = ${agent.id}">
+							<span class="glyphicon glyphicon-trash"></span>
+						</a>
+					</td>
+					<td><a th:href="@{/admin/{admin_id}/show/agent/{agent_id}/details(admin_id = ${session.agentProfile.id}, agent_id = ${agent.id} ) }"><span class="glyphicon glyphicon-eye-open"></span></a></td>
+				</tr>			
+		</tbody>
+		</table>
+		
+		<!-- pagination system -->
+		<nav aria-label="Page navigation example">
+			<ul class="pagination">
+				<li class="page-item"><a class="page-link" th:href="@{/admin/{id}/show/agents(id = ${session.agentProfile.id} , page=${currentPage - 1}, size=${size})}" th:if="${currentPage - 1} >= 0">Previous</a></li>
+				<li class="page-item" th:class="${currentPage} == ${pages[__status.index__]} ? 'active' : ''" th:each="pa,status:${pages}"><a class="page-link" th:href="@{/admin/{id}/show/agents(id = ${session.agentProfile.id} , page=${pages[__status.index__]}, size=${size})}" th:text="${pages[__status.index__] + 1}"></a></li>
+				<li class="page-item"><a class="page-link" th:href="@{/admin/{id}/show/agents(id = ${session.agentProfile.id} , page=${currentPage + 1}, size=${size})}" th:if="${taille > currentPage + 1}">Next</a></li>
+			</ul>
+		</nav>
+		
+		<div th:replace="fragments/agents/editAgentModal :: editAgentModal"></div>
+		
+		
+		<div th:replace="fragments/agents/agentDetailsModal :: agentDetailsModal"></div>
+		
+	</div>
+    
+</body>
+</html>

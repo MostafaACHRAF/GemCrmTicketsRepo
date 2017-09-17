@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	  
+	<head>
+		<meta charset="utf-8" />
+	</head>
+	
+	<body>
+	
+		<!-- ###################################################################################################################### -->
+		<!-- ###################################################################################################################### -->
+		<!-- ###################################################################################################################### -->
+		<!-- ############################################## show assignedTickets Modal ############################################ -->
+		
+		<div th:fragment="assignedTicketsModal" th:attr="action=${action}" class="modal fade" id="assignedTicketsModal" role="dialog">
+			<div th:if="${ticket}" class="modal-dialog" style="width: 1000px !important;">
+				
+				<div class="modal-content"> <!-- Modal content-->
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title"> List of all assigned tickets to you</h4>
+						</div> <!-- end modal-header -->
+						
+						<div class="modal-body" >
+						
+							
+							<div style="width: 500px; height: 500px; background: blue; overflow-y: scroll;">
+								<p>QFWEJGFELRGQERGRGWRG;ER'G;R'EG;S'RGF'R;G';AWGFWERGFA</p>
+								<p>QFWEJGFELRGQERGRGWRG;ER'G;R'EG;S'RGF'R;G';AWGFWERGFA</p>
+								<p>QFWEJGFELRGQERGRGWRG;ER'G;R'EG;S'RGF'R;G';AWGFWERGFA</p>
+								<p>QFWEJGFELRGQERGRGWRG;ER'G;R'EG;S'RGF'R;G';AWGFWERGFA</p>
+								<p>QFWEJGFELRGQERGRGWRG;ER'G;R'EG;S'RGF'R;G';AWGFWERGFA</p>
+								<p>QFWEJGFELRGQERGRGWRG;ER'G;R'EG;S'RGF'R;G';AWGFWERGFA</p>
+								<p>QFWEJGFELRGQERGRGWRG;ER'G;R'EG;S'RGF'R;G';AWGFWERGFA</p>
+								<p>QFWEJGFELRGQERGRGWRG;ER'G;R'EG;S'RGF'R;G';AWGFWERGFA</p>
+								<p>QFWEJGFELRGQERGRGWRG;ER'G;R'EG;S'RGF'R;G';AWGFWERGFA</p>
+								<p>QFWEJGFELRGQERGRGWRG;ER'G;R'EG;S'RGF'R;G';AWGFWERGFA</p>
+								<p>QFWEJGFELRGQERGRGWRG;ER'G;R'EG;S'RGF'R;G';AWGFWERGFA</p>
+								<p>QFWEJGFELRGQERGRGWRG;ER'G;R'EG;S'RGF'R;G';AWGFWERGFA</p>
+								<p>QFWEJGFELRGQERGRGWRG;ER'G;R'EG;S'RGF'R;G';AWGFWERGFA</p>
+							</div>
+							
+							
+						
+						</div> <!-- end modal-body -->
+						
+						<div class="modal-footer"></div>
+						
+			    </div> <!-- end modal-content -->
+				
+			</div>
+		</div> <!-- end ticketDetailsModal -->
+		
+		<!-- ############################################ end assignedTickets Modal ############################################# -->
+		<!-- #################################################################################################################### -->
+		<!-- #################################################################################################################### -->
+		<!-- #################################################################################################################### -->
+		
+	</body>
+	
+</html>

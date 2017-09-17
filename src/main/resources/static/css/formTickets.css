@@ -1,0 +1,8 @@
+.errorSpan {
+	color:red;
+	font-size: 12px;
+}
+
+.deleteTicket:hover {
+	cursor: pointer;
+}

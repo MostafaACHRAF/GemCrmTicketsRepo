@@ -1,0 +1,16 @@
+@font-face {
+    font-family: 'Lato-Black';
+    src: url('../fonts/Lato-Black.ttf');
+}
+
+body {
+   background: url('../images/OAI4ZE0.jpg') center -300px / cover no-repeat;
+}
+
+
+h1 {
+	color:white;
+	font-weight: bold;
+	font-size: 25px;
+	font-family: 'Lato-Black';
+}
