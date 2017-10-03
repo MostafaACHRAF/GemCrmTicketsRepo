@@ -69,7 +69,7 @@ public class GemCrmTicketsApplication implements CommandLineRunner {
 		Agent agent1 = agentRepository.save(new Developer("agent1", "agent1", "user.png", new SimpleDateFormat("dd/MM/yyyy").parse("03/11/1969"), "agent1gma@gmail.com", "@Password", 01, "0601943183", 8000, "Software Engineer", "cv1", "CDI", new Date(), new Date(), new Date(), null, true));
 		Agent agent11 = agentRepository.save(new Developer("agent2", "agent2", "user.png", new SimpleDateFormat("dd/MM/yyyy").parse("25/05/1998"), "agent2@gmail.com", "P@ssword", 02, "0601943183", 8000, "Support agent", "cv2", "CDI", new Date(), new Date(), new Date(), null, true));
 		Agent agent2 = agentRepository.save(new Support("agent3", "agent3", "user.png", new SimpleDateFormat("dd/MM/yyyy").parse("09/08/1967"), "agent3@gmail.com", "P@ssword", 03, "0601943183", 10000, "Marketing agent", "cv3", "CDI", new Date(), new Date(), new Date(), null, true));
-		Agent agent3 = agentRepository.save(new Admin("mostafa", "achraf", "user.png", new SimpleDateFormat("dd/MM/yyyy").parse("07/12/1994"), "mostafaegma@gmail.com", "AdminCGT", 04, "0601943183", 18000, "Director", "cv4", "CDI", new Date(), new Date(), new Date(), null, true));
+		Agent agent3 = agentRepository.save(new Admin("mostafa", "achraf", "user.png", new SimpleDateFormat("dd/MM/yyyy").parse("07/12/1994"), "mostafaegma@gmail.com", "AdminGCT", 04, "0601943183", 18000, "Director", "cv4", "CDI", new Date(), new Date(), new Date(), null, true));
 		//Done!
 		
 		/* ajouter des tickets */
