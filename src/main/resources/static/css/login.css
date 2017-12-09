@@ -1,0 +1,13 @@
+body {
+	background: #83a4d4;
+	background: -webkit-linear-gradient(to right, #b6fbff, #83a4d4);
+	background: linear-gradient(to right, #b6fbff, #83a4d4);
+}
+
+.login-container  {
+	margin-top:200px;
+}
+
+.login-box {
+	box-shadow: 0px 2px 7px gray;
+}

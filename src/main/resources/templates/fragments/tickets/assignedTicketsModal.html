@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+	  
+	<head>
+		<meta charset="utf-8" />
+	</head>
+	
+	<body>
+	
+		<!-- ###################################################################################################################### -->
+		<!-- ###################################################################################################################### -->
+		<!-- ###################################################################################################################### -->
+		<!-- ############################################## show assignedTickets Modal ############################################ -->
+		
+		<div th:fragment="assignedTicketsModal" th:attr="action=${action2}" class="modal fade" id="assignedTicketsModal" role="dialog">
+			<div class="modal-dialog" style="width: 1200px !important;">
+				
+				<div class="modal-content"> <!-- Modal content-->
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title"> List of all assigned tickets to you</h4>
+						</div> <!-- end modal-header -->
+						
+						<div class="modal-body" >
+						
+						
+							<div class="col-md-2 radion-box pull-right">
+								<div id="radioBox2" class="btn-group" data-toggle="buttons">
+									<label id="all2" class="btn btn-primary active" data-toggle="tooltip" title="All">
+										<input type="radio" name="options" value="all" autocomplete="off" />
+										<span class="glyphicon glyphicon-ok"></span>
+									</label>
+						
+									<label id="opened2" class="btn btn-danger" data-toggle="tooltip" title="Opened">
+										<input type="radio" name="options" value="opened" autocomplete="off" />
+										<span class="glyphicon glyphicon-ok"></span>
+									</label>
+						
+									<label id="in_progress2" class="btn btn-warning" data-toggle="tooltip" title="In Progress">
+										<input type="radio" name="options" value="in_progress" autocomplete="off" />
+										<span class="glyphicon glyphicon-ok"></span>
+									</label>
+									
+									<label id="closed2" class="btn btn-success" data-toggle="tooltip" title="Closed">
+										<input type="radio" name="options" value="closed" autocomplete="off" />
+										<span class="glyphicon glyphicon-ok"></span>
+									</label>
+								</div> <!-- end btn-group -->
+							</div> <!-- end col-md-3 -->
+						
+							<div class="assignedTicketsTable-container">
+							<table id="assignedTicketsTable" class="table table-striped">
+							
+								<thead>
+									<tr>
+										<th>Id</th>
+										<th>Subject</th>
+										<th>Description</th>
+										<th>Solution</th>
+										<th>Company</th>
+										<th>Status</th>
+										<th>Activity type</th>
+										<th>Created at</th>
+										<th>Updated at</th>
+										<th>Modify</th>
+										<th sec:authorize="hasRole('ROLE_adm')">Delete</th>
+										<th>Details</th>
+										<th>Assign</th>
+									</tr>
+								</thead>
+								
+								<tbody>
+									<tr th:each="ticket:${listAssignedTickets}">
+										<td th:text="${ticket.id}"></td>
+										<td th:text="${ticket.subject}"></td>
+										<td th:text="${ticket.description}"></td>
+										<td th:text="${ticket.solution}"></td>
+										<td th:text="${ticket.company}"></td>
+										<td th:switch="${ticket.status}">
+											<span class="label label-danger status" th:case="opened" th:text="${ticket.status}"></span>
+											<span class="label label-warning status" th:case="in_progress" th:text="${ticket.status}"></span>
+											<span class="label label-success status" th:case="closed" th:text="${ticket.status}"></span>
+										</td>
+										<td th:text="${ticket.activity_type}"></td>
+										<td th:text="${ticket.created_at != null ? #dates.format(ticket.created_at, 'dd/MM/YYYY') : '' }"></td>
+										<td th:text="${ticket.updated_at != null ? #dates.format(ticket.updated_at, 'dd/MM/YYYY') : '' }"></td>
+										<td>
+											<a th:if="${ticket.status != 'closed' or session.agentProfile.class.simpleName == 'Admin'}" th:href="@{/agent/{id}/edit/ticket/{ticket_id}(id = ${session.agentProfile.id}, ticket_id = ${ticket.id}, from = 'assignedTickets' )}">
+												<span class="glyphicon glyphicon-pencil"></span>
+											</a>
+										</td>
+										<td sec:authorize="hasRole('ROLE_adm')"><a th:attr="admin_id = ${session.agentProfile.id}, ticket_id = ${ticket.id}" class="deleteTicket"><span class="glyphicon glyphicon-trash"></span></a></td>
+										<td><a th:href="@{/agent/{id}/show/ticket/{component_id}/details(id = ${session.agentProfile.id}, component_id = ${ticket.id}, from = 'assignedTickets' )}"><span class="glyphicon glyphicon-eye-open"></span></a></td>
+										<td><a th:if="${ticket.status != 'closed'}" th:href="@{/agent/{id}/assign/ticket/{ticket_id}/to(id = ${session.agentProfile.id}, ticket_id = ${ticket.id}, from = 'assignedTickets' )}"><span class="glyphicon glyphicon-link"></span></a></td>
+									</tr>
+								</tbody>
+				
+							</table>
+							</div>
+							
+							<!-- Statistics -->
+							<div class="pull-right" style="width:200px; height:200px;">
+								<canvas id="assignedTicketsChart" width="100" height="100"></canvas>
+							</div>
+						
+						</div> <!-- end modal-body -->
+						
+						<div class="modal-footer"></div>
+						
+			    </div> <!-- end modal-content -->
+				
+			</div>
+		</div> <!-- end ticketDetailsModal -->
+		
+		<!-- ############################################ end assignedTickets Modal ############################################# -->
+		<!-- #################################################################################################################### -->
+		<!-- #################################################################################################################### -->
+		<!-- #################################################################################################################### -->
+		
+	</body>
+	
+</html>

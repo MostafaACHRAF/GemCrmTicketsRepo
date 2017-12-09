@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="template"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+	<head>
+		<meta charset="utf-8" />
+		<title>GCT - Companies</title>
+		<link rel="stylesheet" type="text/css" th:href="@{/css/formCompanies.css}" />
+		<link rel="stylesheet" type="text/css" th:href="@{/css/companies.css}" />
+		<script type="text/javascript" th:src="@{/js/companies.js}"></script>
+	</head>
+	
+	
+	<body>
+		
+		<div layout:fragment="contentHeader">
+			<h1>List of all Companies</h1>
+			<ol class="breadcrumb">
+				<li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+	            <li class="active">companies</li>
+	        </ol>
+		</div>
+		
+		<div layout:fragment="content">
+		
+			<div class="col-md-8 searchBar">
+				<div class="input-group">
+					<input id="companyName" type="text" name="name" placeholder="Search companies by name..."  class="form-control" />
+					<div class="input-group-addon">
+						<span class="glyphicon glyphicon-search"></span>
+					</div>
+				</div>
+			</div> <!-- end col-md-8 -->
+			
+			<div class="col-md-4">
+				<a class="btn btn-success pull-right addCompanyBtn" th:href="@{/admin/{admin_id}/edit/company(admin_id = ${session.agentProfile.id})}"><i class="fa fa-plus"></i>&nbsp; New Company</a>
+			</div>
+			
+			<div class="table-container">
+				<table id="mainTable" class="table table-striped">
+					<thead>
+						<tr>
+							<th>Id</th>
+							<th>Name</th>
+							<th>Legal status</th>
+							<th>Turnover</th>
+							<th>Employees</th>
+							<th>Sector</th>
+							<th>Nationality</th>
+							<th>Created at</th>
+							<th>updated at</th>
+							<th>Modify</th>
+							<th>Delete</th>
+							<th>Details</th>
+						</tr>
+					</thead>
+				
+					<tbody>
+						<tr th:each="company:${listCompanies}">
+							<td th:text="${company.id}"></td>
+							<td th:text="${company.name}"></td>
+							<td th:text="${company.legal_status}"></td>
+							<td th:text="${#numbers.formatDecimal(company.turnover, 0, 2, 'POINT')}"></td>
+							<td th:text="${company.number_employees}"></td>
+							<td th:text="${company.sector}"></td>
+							<td th:text="${company.nationality}"></td>
+							<td th:text="${company.created_at != null ? #dates.format(company.created_at, 'dd/MM/yyyy') : ''}"></td>
+							<td th:text="${company.updated_at != null ? #dates.format(company.updated_at, 'dd/MM/yyyy') : ''}"></td>
+							<td><a th:href="@{/admin/{admin_id}/edit/company/{company_id}(admin_id = ${session.agentProfile.id}, company_id = ${company.id} )}"><span class="glyphicon glyphicon-pencil"></span></a></td>
+							<td><a class="deleteCompany" th:attr="admin_id = ${session.agentProfile.id}, company_id = ${company.id}"><span class="glyphicon glyphicon-trash"></span></a></td>
+							<td><a th:href="@{/admin/{admin_id}/show/company/{company_id}/details(admin_id = ${session.agentProfile.id}, company_id = ${company.id} ) }"><span class="glyphicon glyphicon-eye-open"></span></a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div> <!-- end table-container -->
+			
+			<!-- pagination system -->
+			<nav aria-label="Page navigation example">
+				<ul class="pagination">
+					<li class="page-item"><a class="page-link" th:href="@{/admin/{id}/show/companies(id = ${session.agentProfile.id} , page=${currentPage - 1}, size=${size})}" th:if="${currentPage - 1} >= 0">Previous</a></li>
+				    <li class="page-item" th:class="${currentPage} == ${pages[__status.index__]} ? 'active' : ''" th:each="pa,status:${pages}"><a class="page-link" th:href="@{/admin/{id}/show/companies(id = ${session.agentProfile.id} , page=${pages[__status.index__]}, size=${size})}" th:text="${pages[__status.index__] + 1}"></a></li>
+				    <li class="page-item"><a class="page-link" th:href="@{/admin/{id}/show/companies(id = ${session.agentProfile.id} , page=${currentPage + 1}, size=${size})}" th:if="${taille > currentPage + 1}">Next</a></li>
+				</ul>
+			</nav>
+		
+		<div th:replace="fragments/companies/editCompanyModal :: editCompanyModal"></div>
+		
+		<div th:replace="fragments/companies/companyDetailsModal :: companyDetailsModal"></div>
+		
+		</div> <!-- end fragment content -->
+		
+	</body>
+	
+</html>

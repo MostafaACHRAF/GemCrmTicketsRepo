@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="utf-8" />
+	</head>
+	
+	<body>
+		
+		<!-- #################################################################################################################### -->
+		<!-- #################################################################################################################### -->
+		<!-- #################################################################################################################### -->
+		<!-- ################################################# agentProfileModal ################################################ -->
+	
+		<div th:fragment="agentProfileModal" th:attr="action=${action}" class="modal fade" id="agentProfileModal" role="dialog">
+			
+			<div th:if="${agent}" class="modal-dialog" style="width: 1000px !important;">
+				
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">
+							<span th:text="${action}"></span> <span th:text="${agent.name + ' :'}"></span>
+						</h4>
+					</div>
+					
+					<div class="modal-body" >
+					
+						<div class="col-md-5">
+								
+								<img th:src="@{${'/images/' + agent.image}}" alt="user-avatar" class="img-thumbnail user-avatar" />
+							
+								<form id="uploadImagesForm" th:action="@{/upload/file}" method="post" enctype="multipart/form-data">
+									<!-- ########################################### image input ########################################### -->
+									<div class="form-group">
+										<label for="imageInput123">Profile Image</label>
+											<input id="imageInput123" type="file" name="file" class="file"/>
+										<span class="errorSpan" th:errors="${agent.image}"></span>
+									</div>
+									<span id="uploadImageMsg"></span>
+								</form>
+								
+								
+							<!-- ########################################### cv input ########################################### -->	
+							<form id="uploadCvForm" th:action="@{/upload/file}" method="post" enctype="multipart/form-data">
+								<div class="form-group">
+									<label for="cvInput">Upload Your CV</label>
+									<input id="cvInput" type="file" name="file" th:value="${agent.cv}" class="file" data-preview-file-type="text" />
+								</div>
+								<span id="uploadCvMsg"></span>
+							</form>
+						</div> <!-- end col-md-4 -->
+						
+						
+						<!-- ########################################### name input ########################################### -->
+						<form th:if="${agent}" th:action="@{/agent/{agent_id}/save/{role}/profile(agent_id = ${session.agentProfile.id}, role = ${#strings.toLowerCase(agent.class.simpleName)} )}" method="post">
+						<div class="col-md-7">
+						<div class="form-group">
+							<label for="nameInput">Name</label>
+							<input id="nameInput" type="text" name="name" th:value="${#strings.capitalize(agent.name)}" class="form-control" />
+							<span class="errorSpan" th:errors="${agent.name}"></span>
+						</div> <!-- end form-group (1) -->
+						
+						<!-- ########################################### lastName input ########################################### -->
+						
+						<div class="form-group">
+						<label for="lastNameInput">Last Name</label>
+							<input id="lastNameInput" type="text" name="lastName" th:value="${#strings.toUpperCase(agent.lastName)}" class="form-control" />
+							<span class="errorSpan" th:errors="${agent.lastName}"></span>
+						</div> <!-- end form-group (2) -->
+						
+						<!-- ########################################### birthDate input ########################################### -->
+						
+						<div class="form-group">
+							<label for="datetimepicker6">Birth Date</label>
+						    <div class='input-group date' id='datetimepicker8'>
+						    	<input type='text' name="birthDate" th:value="${agent.birthDate != null ? #dates.format(agent.birthDate, 'dd/MM/yyyy') : ''}" class="form-control" /> 
+						        <span class="input-group-addon">
+						        	<span class="glyphicon glyphicon-calendar"></span>
+						        </span>           
+						    </div>
+						    <span class="errorSpan" th:errors="${agent.birthDate}"></span>           
+						</div>
+						
+						<!-- ########################################### email input ########################################### -->
+						
+						<div class="form-group">
+							<label for="emailInput">Address Mail</label>
+							<input id="emailInput" type="text" name="email" th:value="${agent.email}" class="form-control" />
+							<span class="errorSpan" th:errors="${agent.email}"></span>
+						</div> <!-- end form-group -->
+						
+						<!-- ########################################### old Password input ########################################### -->
+						
+						<div class="form-group">
+							<label for="passInput">Password</label>
+							<div class="input-group">
+								<input id="passInput" type="password" name="password" th:value="${agent.password}" class="form-control" readonly="readonly" />
+								<span class="input-group-btn">
+		                        	<!-- <a href="#" class="btn btn-default btn-md" id="showhide3" data-val='1'><span id='eye3' class="glyphicon glyphicon-eye-open"></span></a> -->
+		                        	<a href="#" class="btn btn-default btn-md" id="changeOldPass" data-val='1'><span id='pencil' class="glyphicon glyphicon-pencil"></span></a>
+		                        </span>
+								
+							</div> <!-- end input-group -->
+							<span class="errorSpan" th:errors="${agent.password}"></span>
+						</div> <!-- end form-group -->
+						
+	
+						<!-- ########################################### formation input ########################################### -->
+						
+						<div class="form-group">
+							<label for="formationInput">Formation</label>
+							<input id="formationInput" type="text" name="formation" th:value="${agent.formation}" class="form-control" />
+							<span class="errorSpan" th:errors="${agent.formation}"></span>
+						</div> <!-- end form-group -->
+						
+						<!-- ########################################### primary hidden input ########################################### -->
+						
+						<input id="idI" type="hidden" name="id" th:value="${agent.id}" class="form-control" />
+						
+						<input id="imageI" type="hidden" name="image" th:value="${agent.image}" class="form-control" />
+						
+						<input id="cvI" type="hidden" name="cv" th:value="${agent.cv}" class="form-control" />
+						
+						<input id="confirmPassI" type="hidden" name="confirmPassword" th:value="${agent.password}" class="form-control" />
+
+						<input type="hidden" name="office_number" th:value="${agent.office_number}" class="form-control" />
+						
+						<input type="hidden" name="office_tel" th:value="${agent.office_tel}" class="form-control" />
+						
+						<input type="hidden" name="salary" th:value="${agent.salary}" class="form-control" />
+						
+						<input type="hidden" name="contract_type" th:value="${agent.contract_type}" />						
+						
+						<input type='hidden' name="start_date" th:value="${agent.start_date != null ? #dates.format(agent.start_date, 'dd/MM/YYYY') : ''}" class="form-control" />
+						
+						<input type='hidden' name="end_date" th:value="${agent.end_date != null ? #dates.format(agent.end_date, 'dd/MM/YYYY') : ''}" class="form-control" />
+
+
+						<!-- ########################################### secondary hidden input ########################################### -->
+						
+						<input type="hidden" name="page" th:value="${currentPage}" class="form-control" />
+						
+						<input type="hidden" name="size" th:value="${size}" class="form-control" />
+						
+						<input type="hidden" name="visibility" value="1" />
+						
+						<span class="errorSpan" th:errors="${agent.id}"></span>
+						<span class="errorSpan" th:errors="${agent.image}"></span>
+						<span class="errorSpan" th:errors="${agent.cv}"></span>
+						<span class="errorSpan" th:errors="${agent.office_number}"></span>
+						<span class="errorSpan" th:errors="${agent.office_tel}"></span>
+						<span class="errorSpan" th:errors="${agent.salary}"></span>
+						<span class="errorSpan" th:errors="${agent.contract_type}"></span>
+						<span class="errorSpan" th:errors="${agent.start_date}"></span>
+						<span class="errorSpan" th:errors="${agent.end_date}"></span>
+						
+						
+						</div> <!-- end col-md-7 -->
+						
+						<button type="submit" class="btn btn-success pull-right" id="saveCompte">Save Changes</button>	
+
+						</form>
+						
+					
+					</div> <!-- end modal-body -->
+					
+					<div class="modal-footer"></div> <!-- end modal-footer -->
+					  
+				</div> <!-- end modal-content -->
+				
+			</div> <!-- end modal-dialog -->
+			
+		</div> <!-- end  agentProfileModal -->
+		
+		<!-- ############################################## end agenProfileModal ############################################### -->
+		<!-- #################################################################################################################### -->
+		<!-- #################################################################################################################### -->
+		<!-- #################################################################################################################### -->
+		
+		
+	</body>
+
+</html>

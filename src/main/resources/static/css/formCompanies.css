@@ -1,0 +1,22 @@
+.errorSpan {
+	color: red;
+	font-size: 12px;
+}
+
+.deleteCompany:hover {
+	cursor: pointer;
+}
+
+.companyDetailsHeader {
+	font-weight: bold;
+	font-size: 12px;
+}
+
+.img-thumbnail {
+	width: 200px;
+	height: 200px;
+}
+
+.detailsTitle {
+	font-weight: bold;
+}

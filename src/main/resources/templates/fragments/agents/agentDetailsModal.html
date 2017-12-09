@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="utf-8" />
+	</head>
+	
+	<body>
+		
+		<!-- #################################################################################################################### -->
+		<!-- #################################################################################################################### -->
+		<!-- #################################################################################################################### -->
+		<!-- ################################################# agentDetailsModal ################################################ -->
+		
+		<div th:fragment="agentDetailsModal" th:attr="action=${action}" class="modal fade" id="agentDetailsModal" role="dialog">
+			
+			<div th:if="${agent}" class="modal-dialog" style="width: 1000px !important;">
+				
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">
+							<span th:text="${#strings.capitalize(action)}"></span> <span th:text="${role}"></span> Account :
+						</h4>
+					</div>
+					
+					<div class="modal-body" >
+					
+						<div class="col-md-3">
+							<img th:src="@{/images/4444.png}" class="img-thumbnail" />
+							<ul class="list-group" style="margin-top: 20px;">
+								<li class="list-group-item">
+									<span class="companyDetailsHeader label label-success">Created at :</span>
+									<span th:text="${agent.created_at != null ? #dates.format(agent.created_at, 'dd/MM/yyyy - H:MM') : '---'}"></span>
+									<span class="glyphicon glyphicon-time pull-right"></span>
+								</li>
+								<li class="list-group-item">
+									<span class="companyDetailsHeader label label-success">Updated at :</span>
+									<span th:text="${agent.updated_at != null ? #dates.format(agent.updated_at, 'dd/MM/yyyy') : '---'}"></span>
+									<span class="glyphicon glyphicon-time pull-right"></span>
+								</li>
+							</ul>		
+						</div>
+						
+						<div class="col-md-4" style="margin-top: 20px;">
+							<h4 class="bold">Personal Informations :</h4>
+							<ul class="list-group">
+								<li class="list-group-item">
+									<span class="companyDetailsHeader label label-primary">Name :</span>
+									<span th:text="${#strings.capitalize(agent.name)}"></span>
+									<span class="glyphicon glyphicon-paperclip pull-right"></span>
+								</li>
+								<li class="list-group-item">
+									<span class="companyDetailsHeader label label-primary">Last Name :</span>
+									<span th:text="${#strings.capitalize(agent.lastName)}"></span>
+									<span class="glyphicon glyphicon-paperclip pull-right"></span>
+								</li>
+								<li class="list-group-item">
+									<span class="companyDetailsHeader label label-primary">Email :</span>
+									<span th:text="${agent.email}"></span>
+									<span class="glyphicon glyphicon-paperclip pull-right"></span>
+								</li>
+								<li class="list-group-item">
+									<span class="companyDetailsHeader label label-primary">Age :</span>
+									<span th:text="${agent.age} + ' years'"></span>
+									<span class="glyphicon glyphicon-paperclip pull-right"></span>
+								</li>
+								<li class="list-group-item">
+									<span class="companyDetailsHeader label label-primary">Post :</span>
+									<span th:text="${#strings.capitalize(agent.class.simpleName)}"></span>
+									<span class="glyphicon glyphicon-paperclip pull-right"></span>
+								</li>
+								<li class="list-group-item">
+									<span class="companyDetailsHeader label label-primary">Salary :</span>
+									<span th:text="${agent.salary}"></span>
+									<span class="glyphicon glyphicon-euro pull-right"></span>
+								</li>
+								<li class="list-group-item">
+									<span class="companyDetailsHeader label label-primary">Office Number :</span>
+									<span th:text="${agent.office_number}"></span>
+									<span class="glyphicon glyphicon-paperclip pull-right"></span>
+								</li>
+								<li class="list-group-item">
+									<span class="companyDetailsHeader label label-primary">Office Tel :</span>
+									<span th:text="${agent.office_tel}"></span>
+									<span class="glyphicon glyphicon-paperclip pull-right"></span>
+								</li>
+							</ul>
+						</div>
+						
+						<div class="col-md-5" style="margin-top: 20px;">
+							<h4 th:text="${'Agent ' + agent.id + ' Operations : '}"></h4>
+							
+							<div class="pre-scrollable">
+								<table class="table table-responsive table-striped">
+									<thead>
+										<tr>
+											<th>Id</th>
+											<th>Operation</th>
+											<th>To</th>
+											<th>Date</th>
+										</tr>
+									</thead>
+									
+									<tbody>
+										<tr th:each="op:${agentOperations}">
+											<td th:text="${op.id}"></td>
+											<td th:text="${op.name}"></td>
+											<td th:if="${agentRepository}" th:text="${op.name == 'assign ticket' ? agentRepository.findOne(op.to_agent).name : '---'}"></td>
+											<td th:text="${op.created_at != null ? #dates.format(op.created_at, 'dd/MM/yyyy - H:MM') : '' }"></td>
+										</tr>
+									</tbody>
+								</table>	
+							</div>
+						</div>
+					
+					</div> <!-- end modal-body -->
+					
+					<div class="modal-footer"></div>
+					
+				</div> <!-- end modal-content -->
+				
+			</div> <!-- end modal-dialog -->
+			
+		</div> <!-- end modal agentDetailsModal -->
+		
+		
+		<!-- ############################################## end agentDetailsModal ############################################### -->
+		<!-- #################################################################################################################### -->
+		<!-- #################################################################################################################### -->
+		<!-- #################################################################################################################### -->
+		
+	</body>
+
+</html>

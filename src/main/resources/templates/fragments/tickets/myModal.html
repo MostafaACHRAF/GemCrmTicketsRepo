@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	  
+	<head>
+		<meta charset="utf-8" />
+	</head>
+	
+	<body>
+		
+		<!-- #################################################################################################################### -->
+		<!-- #################################################################################################################### -->
+		<!-- #################################################################################################################### -->
+		<!-- ################################################## editTicketModal ################################################## -->
+		
+		
+		<div th:fragment="myModal" th:attr="action=${action}" class="modal fade" id="myModal" role="dialog">
+			<div th:attr="saveTicketWithSuccess = ${m_tickSuccessMsg}" class="modal-dialog">
+				<form th:if="${ticket}" th:action="@{/agent/{id}/save/ticket(id = ${session.agentProfile.id})}" method="post">
+				
+					<div class="modal-content"> <!-- Modal content-->
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">
+								<span th:text="${#strings.capitalize(action)}"></span> Ticket number <span th:text="${ticket.id}"></span>
+							</h4>
+						</div> <!-- end modal-header -->
+						
+						<div class="modal-body" >
+						
+							<p class="text-danger">(*) All fields are required !</p>
+							
+							<!-- ########################################### ticket id input ########################################### -->
+							
+							<div class="row">
+							
+							<div class="col-md-6"> <!-- th:if="${action == 'update'}" -->
+								<div class="form-group">
+									<label for="idInput">Identifier</label>
+									<input id="idInput" type="text" name="id" th:value="${ticket.id}" class="form-control"  readonly="readonly" />
+									<span class="errorSpan" th:errors="${ticket.id}"></span>
+								</div>
+							</div>
+			
+							<!-- ########################################### ticket subject input ########################################### -->
+							
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="subjectInput">Subject</label>
+									<input id="subjectInput" type="text" name="subject" th:value="${ticket.subject}" placeholder="Subject" class="form-control" th:readonly="${action == 'update'}" />
+									<span class="errorSpan" th:errors="${ticket.subject}"></span>
+								</div>
+							</div>
+							
+							</div> <!-- end row 1 -->
+							
+							<!-- ########################################### ticket description textarea ########################################### -->
+							
+							<div class="row">
+							
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="descriptionTextarea">Description</label>
+									<textarea id="descriptionTextarea" name="description" th:text="${ticket.description}"  rows="8" cols="10" class="form-control"></textarea>
+									<span class="errorSpan" th:errors="${ticket.description}"></span>
+								</div>
+							</div>
+							
+							<!-- ########################################### ticket solution textarea ########################################### -->
+							
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="solutionTextarea">Solution</label>
+									<textarea id="solutionTextarea" name="solution" th:text="${ticket.solution}" rows="8" cols="10" class="form-control"></textarea>
+								</div>
+							</div>
+							
+							</div> <!-- end row 2 -->
+							
+							<!-- ########################################### ticket status select ########################################### -->
+							
+							<div class="row">
+							
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="solutionSelect">Status</label>
+										<select id="solutionSelect" name="status" class="form-control">
+											<option value="opened" th:selected="${ticket.status == 'open'}">Opened</option>
+											<option value="in_progress" th:selected="${ticket.status == 'in_progress'}">In progress</option>
+											<option value="closed" th:selected="${ticket.status == 'closed'}">Closed</option>
+										</select>
+									</div>
+								</div>
+							
+								
+								
+							<!-- ########################################### ticket company select ########################################### -->
+							
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="companySelect">Company</label>
+									<select id="companySelect" name="company" class="form-control">
+										<option th:each="c:${listCompanies}" th:value="${c.name}" th:selected="${ticket.company == c.name}" th:text="${c.name}"></option>
+									</select>	
+								</div>
+							</div>
+							
+							</div> <!-- end row 3 -->
+							
+							<!-- ########################################### ticket activity_type select ########################################### -->
+							
+							<div class="row">
+								
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="activityTypeSelect">Activity type</label>
+										<select id="activityTypeSelect" name="activity_type" class="form-control">
+											<option value="call" th:selected="${ticket.activity_type == 'call'}">Call</option>
+											<option value="mail" th:selected="${ticket.activity_type == 'mail'}">Mail</option>
+										</select>
+									</div>
+								</div>
+								
+							</div> <!-- end row 4 -->
+							
+							<!-- ########################################### hidden inputs ########################################### -->
+							
+							<input type="hidden" name="visibility" value="1" />
+							
+							<input type="hidden" name="action" th:value="${action}" />
+							
+							<input th:if="${action2}" type="hidden" name="action2" th:value="${action2}" />
+							
+						</div> <!-- end modal-body -->
+						
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-success" id="saveCompte">Save</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+						</div>
+					</div> <!-- end modal-content -->
+				
+				</form>
+				
+			</div> <!-- end modal-dialog -->
+			
+		</div> <!-- end modal fade -->
+		
+		<!-- ################################################ end editTicketModal ################################################ -->
+		<!-- #################################################################################################################### -->
+		<!-- #################################################################################################################### -->
+		<!-- #################################################################################################################### -->
+		
+	</body>
+	
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="utf-8" />
+	</head>
+	
+	<body>
+		
+		<!-- #################################################################################################################### -->
+		<!-- #################################################################################################################### -->
+		<!-- #################################################################################################################### -->
+		<!-- ################################################# changePassModal ################################################ -->
+		
+		<div th:fragment="changePassModal" class="modal fade" id="changePassModal" role="dialog">
+			
+			<div class="modal-dialog">
+				
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">
+							<span>Change Your Password</span>
+						</h4>
+					</div>
+					
+					<div class="modal-body" >
+					
+						<!-- ########################################### old Password input ########################################### -->
+					
+						<div class="form-group">
+							<label for="newPass">Old Password</label>
+							<div class="input-group">
+								<input id="oldPass" type="password" name="oldPass" class="form-control" />
+								<span class="input-group-btn">
+		                        	<a href="#" class="btn btn-default btn-md" id="showhide3" data-val='1'><span id='eye3' class="glyphicon glyphicon-eye-open"></span></a>
+		                        	<!-- <a id="showHidePassBtn" href="#" class="btn btn-default btn-md" data-val='1'><span class="glyphicon glyphicon-eye-open" id="eye11"></span></a>    -->
+		                        </span>
+							</div>
+							<span id="oldPassError"></span>
+						</div> <!-- end form-group -->
+						
+					
+						<!-- ########################################### new Password input ########################################### -->
+						
+						<div class="form-group">
+							<label for="newPass">New Password</label>
+							<div class="input-group">
+								<input id="newPass" type="password" name="newPass" class="form-control" />
+								<span class="input-group-btn">
+		                        	<a id="showHidePassBtn1" href="#" class="btn btn-default btn-md" data-val='1'><span class="glyphicon glyphicon-eye-open" id="eye11"></span></a>   
+		                        </span>
+							</div>
+						</div> <!-- end form-group -->
+						
+						<!-- ########################################### confirm new Password input ########################################### -->
+						
+						<div class="form-group">
+							<label for="confirmNewPass">Confirm New Password</label>
+							<div class="input-group">
+								<input id="confirmNewPass" type="password" name="confirmNewPass" class="form-control pass" />
+								<span class="input-group-btn">
+		                        	<a id="showHidePassBtn2" href="#" class="btn btn-default btn-md" data-val='1'><span id="eye22" class="glyphicon glyphicon-eye-open"></span></a>   
+		                        </span>
+							</div>
+							
+							<span id="newConfirmPassError"></span>
+						</div> <!-- end form-group -->
+					
+					</div> <!-- end modal-body -->
+					
+					<div class="modal-footer">
+						
+						<button id = "saveNewPassBtn" type="button" class="btn btn-success">Save</button>
+						
+					</div> <!-- end modal-footer -->
+					
+				</div> <!-- end modal-content -->
+				
+			</div> <!-- end modal-dialog -->
+			
+		</div> <!-- end modal fade -->
+		
+		<!-- ############################################## end changePassModal ############################################### -->
+		<!-- #################################################################################################################### -->
+		<!-- #################################################################################################################### -->
+		<!-- #################################################################################################################### -->
+		
+	</body>
+	
+</html>

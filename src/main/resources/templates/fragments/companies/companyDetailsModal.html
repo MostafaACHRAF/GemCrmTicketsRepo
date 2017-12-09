@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="utf-8" />
+	</head>
+	
+	<body>
+	
+		<!-- #################################################################################################################### -->
+		<!-- #################################################################################################################### -->
+		<!-- #################################################################################################################### -->
+		<!-- ################################################# companyDetailsModal ############################################## -->
+		
+		<div th:fragment="companyDetailsModal" th:attr="action = ${action}" class="modal fade" id="companyDetailsModal" role="dialog">
+			
+			<div th:if="${company}" class="modal-dialog" style="width: 1000px !important;">
+					
+					<div class="modal-content"> <!-- Modal content-->
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+								<h4 class="modal-title">
+									<span th:text="${#strings.capitalize(action)}"></span> Company <span th:text="${action == 'show Details of' ? 'number ' + company.id : '' }"></span>
+								</h4>
+							</div> <!-- end modal-header -->
+							
+							<div class="modal-body" >
+								<div class="col-md-6">
+									<img th:src="@{/images/4444.png}" class="img-thumbnail" />
+									<ul class="list-group" style="margin-top: 20px;">
+										<li class="list-group-item">
+											<span class="companyDetailsHeader label label-success">Created at :</span>
+									  		<span th:text="${company.created_at != null ? #dates.format(company.created_at, 'dd/MM/yyyy - H:MM') : '---'}"></span>
+									  		<span class="glyphicon glyphicon-time"></span>
+										</li>
+										<li class="list-group-item">
+											<span class="companyDetailsHeader label label-success">Updated at :</span>
+									  		<span th:text="${company.updated_at != null ? #dates.format(company.updated_at, 'dd/MM/yyyy') : '---'}"></span>
+									  		<span class="glyphicon glyphicon-time"></span>
+										</li>
+									</ul>
+									
+								</div>
+								
+								<h4 class="detailsTitle" th:text="${'Company ' + company.id + ' details : '}"></h4>
+								
+								<ul class="list-group col-md-6">
+									  <li class="list-group-item">
+									  	<span class="glyphicon glyphicon-paperclip pull-right"></span>
+									  	<span class="companyDetailsHeader label label-info">Identifier :</span>
+									  	<span th:text="${company.id}"></span>
+									  </li>
+									  <li class="list-group-item">
+									  	<span class="glyphicon glyphicon-paperclip pull-right"></span>
+									  	<span class="companyDetailsHeader label label-info">Name :</span>
+									  	<span th:text="${company.name}"></span>
+									  </li>
+									  <li class="list-group-item">
+									  	<span class="glyphicon glyphicon-paperclip pull-right"></span>
+									  	<span class="companyDetailsHeader label label-info">Email :</span>
+									  	<span th:text="${company.email}"></span>
+									  </li>
+									  <li class="list-group-item">
+									  	<span class="glyphicon glyphicon-paperclip pull-right"></span>
+									  	<span class="companyDetailsHeader label label-info">Address :</span>
+									  	<span th:text="${company.address}"></span>
+									  </li>
+									  <li class="list-group-item">
+									  	<span class="glyphicon glyphicon-paperclip pull-right"></span>
+									  	<span class="companyDetailsHeader label label-info">Legal Status :</span>
+									  	<span th:text="${company.legal_status}"></span>
+									  </li>
+									  <li class="list-group-item">
+									  	<span class="glyphicon glyphicon-euro pull-right"></span>
+									  	<span class="companyDetailsHeader label label-info">Turnover :</span>
+									  	<span th:text="${#numbers.formatDecimal(company.turnover, 0, 2, 'POINT')}"></span>
+									  </li>
+									  <li class="list-group-item">
+									  	<span class="glyphicon glyphicon-user pull-right"></span>
+									  	<span class="companyDetailsHeader label label-info">Number of Employees :</span>
+									  	<span th:text="${company.number_employees}"></span>
+									  </li>
+									  <li class="list-group-item">
+									  	<span class="glyphicon glyphicon-paperclip pull-right"></span>
+									  	<span class="companyDetailsHeader label label-info">Sector :</span>
+									  	<span th:text="${company.sector}"></span>
+									  </li>
+									  <li class="list-group-item">
+									  	<span class="glyphicon glyphicon-flag pull-right"></span>
+									  	<span class="companyDetailsHeader label label-info">Nationality :</span>
+									  	<span th:text="${company.nationality}"></span>
+									  </li>
+									</ul>
+									
+							</div> <!-- end modal-body -->
+							
+							<div class="modal-footer"></div>
+							
+					</div> <!-- end modal-content -->
+					
+			</div> <!-- end modal-dialog -->
+			
+		</div> <!-- end modal fade -->
+		
+		<!-- ############################################## end companyDetailsModal ############################################# -->
+		<!-- #################################################################################################################### -->
+		<!-- #################################################################################################################### -->
+		<!-- #################################################################################################################### -->
+	
+	</body>
+	
+</html>

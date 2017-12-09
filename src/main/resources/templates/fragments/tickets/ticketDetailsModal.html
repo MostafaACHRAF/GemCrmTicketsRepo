@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+	<head>
+		<meta charset="utf-8" />
+	</head>
+	
+	<body>
+	
+		<!-- #################################################################################################################### -->
+		<!-- #################################################################################################################### -->
+		<!-- #################################################################################################################### -->
+		<!-- ############################################## show ticketDetails Modal ############################################ -->
+		
+		<div th:fragment="ticketDetailsModal" th:attr="action=${action}" class="modal fade" id="ticketDetailsModal" role="dialog">
+			<div th:if="${ticket}" class="modal-dialog" style="width: 1000px !important;">
+				
+				<div class="modal-content"> <!-- Modal content-->
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">
+								<span th:text="${#strings.capitalize(action)}"></span> Ticket number <span th:text="${ticket.id}"></span>
+							</h4>
+						</div> <!-- end modal-header -->
+						
+						<div class="modal-body" >
+						
+							<div class="col-md-6">
+								<h2>Details</h2>
+								<ul>
+									<li th:text="'Identifier : ' + ${ticket.id}"></li>
+									<li th:text="'Subject : ' + ${ticket.subject}"></li>
+									<li th:text="'Description : ' + ${ticket.description}"></li>
+									<li th:text="'Solution : ' + ${ticket.solution}"></li>
+									<li th:text="'Status : ' + ${ticket.status}"></li>
+									<li th:text="'Created at : ' + ${ticket.created_at != null ? #dates.format(ticket.created_at, 'dd/MM/YYYY') : '---' }"></li>
+									<li th:text="'Updated at : ' + ${ticket.updated_at != null ? #dates.format(ticket.updated_at, 'dd/MM/YYYY') : '---' }"></li>
+								</ul>
+								
+								<h2>Assigned to</h2>
+								<ul>
+									<li th:each="operation:${ticketAssignedTo}" th:text="'To : ' + ${ agentRepository.findOne(operation.to_agent).name } + ' at : ' + ${operation.created_at} + ' by : ' + ${operation.agent.name} "></li>
+								</ul>
+							
+							</div>
+							
+							<!-- display ticket historic -->
+							
+							<div class="col-md-6">
+								<h2>Historic</h2>
+								<table class="table table-striped">
+									<thead>
+										<tr>
+											<th>Description</th>
+											<th>Solution</th>
+											<th>By</th>
+											<th>Date</th>
+										</tr>
+									</thead>
+									
+									<tbody>
+										<tr th:each="h:${ticket.values}">
+											<td th:text="${h.description}"></td>
+											<td th:text="${h.solution}"></td>
+											<td th:text="${h.agent.name}"></td>
+											<td th:text="${h.created_at}"></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							
+							
+						
+						</div> <!-- end modal-body -->
+						
+						<div class="modal-footer"></div>
+						
+			    </div> <!-- end modal-content -->
+				
+			</div>
+		</div> <!-- end ticketDetailsModal -->
+		
+		<!-- ############################################ end ticketDetails Modal ############################################### -->
+		<!-- #################################################################################################################### -->
+		<!-- #################################################################################################################### -->
+		<!-- #################################################################################################################### -->
+	
+	</body>
+
+</html>
