@@ -24,13 +24,21 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 	
 	
 	/* get tickets by status */
+<<<<<<< HEAD
 	@Query("select t from Ticket t where t.status = :s and t.visibility = true order by t.created_at desc")
+=======
+	@Query("select t from Ticket t where t.status = :s order by t.created_at desc")
+>>>>>>> 3611e4b3dcf10afa1c903082f997d9a03bad8465
 	public Page<Ticket> getTicketsByStatus(@Param("s") String s, Pageable pageable);
 	
 	
 	
 	/* get assigned tickets to an agent */
+<<<<<<< HEAD
 	@Query("select t from Ticket t, Operation o where o.to_agent = :agent_id and o.name = 'assign ticket' and t.id = o.component.id and t.visibility = true order by o.created_at desc")
+=======
+	@Query("select t from Ticket t, Operation o where o.to_agent = :agent_id and o.name = 'assign ticket' and t.id = o.component.id order by o.created_at desc")
+>>>>>>> 3611e4b3dcf10afa1c903082f997d9a03bad8465
 	public Page<Ticket> getAssignedTicketsTo(@Param("agent_id") int agent_id, Pageable pageable);
 	
 	

@@ -633,7 +633,11 @@ public class AgentController {
 			BindingResult result, @RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "size", defaultValue="5") int size) {
 		 
+<<<<<<< HEAD
 		System.out.println(page + "****" + size + "****" + ticket.getSubject() + "****");
+=======
+		
+>>>>>>> 3611e4b3dcf10afa1c903082f997d9a03bad8465
 		Agent agent = iAgent.profile(Integer.parseInt(id));
 		
 		ticketValidator.validate(ticket, result);

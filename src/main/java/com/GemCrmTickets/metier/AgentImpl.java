@@ -76,7 +76,11 @@ public class AgentImpl implements IAgent {
 	@Override
 	public Page<Ticket> assignedTickets(int agent_id, int page, int size) {
 
+<<<<<<< HEAD
 		return ticketRepository.getAssignedTicketsTo(agent_id, null);
+=======
+		return ticketRepository.getAssignedTicketsTo(agent_id, new PageRequest(page, size));
+>>>>>>> 3611e4b3dcf10afa1c903082f997d9a03bad8465
 		
 	
 	}
@@ -302,7 +306,11 @@ public class AgentImpl implements IAgent {
 	@Override
 	public Page<Values> getTicketLastValue(int ticket_id) {
 		
+<<<<<<< HEAD
 		return valuesRepository.getTicketHistoric(ticket_id, null);
+=======
+		return valuesRepository.getTicketHistoric(ticket_id, new PageRequest(0, 1));
+>>>>>>> 3611e4b3dcf10afa1c903082f997d9a03bad8465
 		
 	}
 

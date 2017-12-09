@@ -150,10 +150,15 @@ $(document).ready(function() {
 		    			},
 		    			function(){
 		    				var url = "/admin/" + $(delBtn).attr("admin_id") + "/delete/ticket/" + $(delBtn).attr("ticket_id");
+<<<<<<< HEAD
 
 		    				$.ajax( url )
 		    				  .done(function(msg) {
 		    				  	displayTicketsStatistic();
+=======
+		    				$.ajax( url )
+		    				  .done(function(msg) {
+>>>>>>> 3611e4b3dcf10afa1c903082f997d9a03bad8465
 		    				    swal({
 		    				    	title: "The action was successfully completed !",
 		    				    	text: "The ticket number " + $(delBtn).attr("ticket_id") + " has been successfully deleted.",
@@ -168,9 +173,12 @@ $(document).ready(function() {
 		    				
 		    				setTimeout(function() {
 		    					$(delBtn).parent().parent().remove();
+<<<<<<< HEAD
 		    					var ticket_id = $(delBtn).attr("ticket_id");
                                 assignedTicketsChart();
                                 $($("#mainTable tbody tr td:contains(" + ticket_id + ")")[0]).parent().remove();
+=======
+>>>>>>> 3611e4b3dcf10afa1c903082f997d9a03bad8465
 		    				}, 3000);
 		    			});
 		    	});
