@@ -66,17 +66,9 @@ public class GemCrmTicketsApplication implements CommandLineRunner {
 	public void run(String... arg0) throws Exception {
 		
 		/* ajouter les agents */
-<<<<<<< HEAD
 		Agent agent1 = agentRepository.save(new Developer("mostafa", "achraf", "user.png", new SimpleDateFormat("dd/MM/yyyy").parse("07/12/1994"), "mostafaegma@gmail.com", "mostafa", 01, "0601943183", 8000, "Software Engineer", "cv1", "CDI", new Date(), new Date(), new Date(), null, true));
 		Agent agent2 = agentRepository.save(new Support("achraf", "ali", "user.png", new SimpleDateFormat("dd/MM/yyyy").parse("09/08/1967"), "achrafali@gmail.com", "achraf", 02, "0644370050", 10000, "Marketing agent", "cv2", "CDI", new Date(), new Date(), new Date(), null, true));
-		//Agent agent11 = agentRepository.save(new Developer("rahaf", "achraf", "user.png", new SimpleDateFormat("dd/MM/yyyy").parse("25/05/1998"), "rahafachraf@gmail.com", "rahaf", 02, "0610061522", 8000, "Support agent", "cv2", "CDI", new Date(), new Date(), new Date(), null, true));
 		Agent agent3 = agentRepository.save(new Admin("fatima", "zahra", "user.png", new SimpleDateFormat("dd/MM/yyyy").parse("03/11/1969"), "fatimazahra@gmail.com", "fatima", 03, "0696101816", 18000, "Director", "cv3", "CDI", new Date(), new Date(), new Date(), null, true));
-=======
-		Agent agent1 = agentRepository.save(new Developer("agent1", "agent1", "user.png", new SimpleDateFormat("dd/MM/yyyy").parse("03/11/1969"), "agent1gma@gmail.com", "@Password", 01, "0601943183", 8000, "Software Engineer", "cv1", "CDI", new Date(), new Date(), new Date(), null, true));
-		Agent agent11 = agentRepository.save(new Developer("agent2", "agent2", "user.png", new SimpleDateFormat("dd/MM/yyyy").parse("25/05/1998"), "agent2@gmail.com", "P@ssword", 02, "0601943183", 8000, "Support agent", "cv2", "CDI", new Date(), new Date(), new Date(), null, true));
-		Agent agent2 = agentRepository.save(new Support("agent3", "agent3", "user.png", new SimpleDateFormat("dd/MM/yyyy").parse("09/08/1967"), "agent3@gmail.com", "P@ssword", 03, "0601943183", 10000, "Marketing agent", "cv3", "CDI", new Date(), new Date(), new Date(), null, true));
-		Agent agent3 = agentRepository.save(new Admin("mostafa", "achraf", "user.png", new SimpleDateFormat("dd/MM/yyyy").parse("07/12/1994"), "mostafaegma@gmail.com", "AdminGCT", 04, "0601943183", 18000, "Director", "cv4", "CDI", new Date(), new Date(), new Date(), null, true));
->>>>>>> 3611e4b3dcf10afa1c903082f997d9a03bad8465
 		//Done!
 		
 		/* ajouter des tickets */
@@ -85,9 +77,6 @@ public class GemCrmTicketsApplication implements CommandLineRunner {
 		Ticket t2 = ticketRepository.save(new Ticket("subject 2", "description 2", "solution 2", "in_progress", "company2", "call", new Date(), null, true));
 		Ticket t3 = ticketRepository.save(new Ticket("subject 3", "description 3", "solution 3", "closed", "company3", "email", new Date(), null, true));
 		Ticket t4 = ticketRepository.save(new Ticket("subject 4", "description 4", "solution 4", "closed", "company4", "email", new Date(), null, true));
-		/*t1.setVisibility(true); t1.setCreated_at(new Date());
-		t2.setVisibility(true); t2.setCreated_at(new Date());
-		t3.setVisibility(true); t3.setCreated_at(new Date());*/
 		//Done!
 		
 		/* ajouter companies */
@@ -120,12 +109,8 @@ public class GemCrmTicketsApplication implements CommandLineRunner {
 		valuesRepository.save(new Values(t1.getDescription(), t1.getSolution(), new Date(), t1, agent1));
 		valuesRepository.save(new Values(t2.getDescription(), t2.getSolution(), new Date(), t2, agent2));
 		valuesRepository.save(new Values(t3.getDescription(), t3.getSolution(), new Date(), t3, agent1));
-<<<<<<< HEAD
 		valuesRepository.save(new Values(t4.getDescription(), t4.getSolution(), new Date(), t4, agent1));
 		valuesRepository.save(new Values(t21.getDescription(), t21.getSolution(), new Date(), t21, agent1));
-=======
-		
->>>>>>> 3611e4b3dcf10afa1c903082f997d9a03bad8465
 		
 		/* assign ticket: t1,t2 to agent: agent1 by agent: agent1*/
 		operationRepository.save(new AssignTicket(new Date(), "assign ticket", agent1, t1, agent1.getId(), false));
@@ -133,93 +118,8 @@ public class GemCrmTicketsApplication implements CommandLineRunner {
 		operationRepository.save(new AssignTicket(new Date(), "assign ticket", agent1, t3, agent1.getId(), false));
 		operationRepository.save(new AssignTicket(new Date(), "assign ticket", agent1, t3, agent2.getId(), false));
 		operationRepository.save(new AssignTicket(new Date(), "assign ticket", agent1, t3, agent3.getId(), false));
-<<<<<<< HEAD
 		operationRepository.save(new AssignTicket(new Date(), "assign ticket", agent1, t4, agent3.getId(), false));
-=======
-		operationRepository.save(new AssignTicket(new Date(), "assign ticket", agent1, t3, agent3.getId(), false));
->>>>>>> 3611e4b3dcf10afa1c903082f997d9a03bad8465
-		
-		//ticketRepository.modifyTicket("ttttt", "tttttt", "ttttttggg", "opened", "google", "mail", true, 1);
-		
-		/*t1.setDescription("new desc");
-		t1.setSolution("new sol");
-		Ticket newTicket = iAgent.updateTicket(agent3, t1);
-		
-		t1.setDescription("new desc 222");
-		t1.setSolution("new sol 333");
-		newTicket = iAgent.updateTicket(agent3, t1);
-		
-		newTicket = iAgent.updateTicket(agent3, t1);
-		
-		Page<Values> lastTicketValues = iAgent.getTicketLastValue(1);
-		
-		List<Values> vals = lastTicketValues.getContent();
-		
-		List<Values> historic = iAgent.getTicketHistoric(1, 0, 7).getContent();
-		
-		for(Values v : vals) {
-			System.out.println("last desc : " + v.getDescription() + " - last sol : " + v.getSolution());
-		}
-		
-		for(Values h : historic) {
-			System.out.println("historic 1 : " + h.getDescription() + " --- " + h.getSolution());
-		}*/
-		
-	
-		
-		/*agentRepository.modifyAgent(agent1.getName(),
-				agent1.getLastName(), agent1.getImage(), agent1.getAge(), agent1.getEmail(), "newwww",
-				agent1.getOffice_number(), agent1.getOffice_tel(), agent1.getSalary(), agent1.getFormation(), agent1.getCv(), 
-				agent1.getContract_type(), agent1.getStart_date(), agent1.getEnd_date(), agent1.getVisibility(), agent1.getId());*/
-		
-		/*System.out.println("ticket number 3 assigned to : ");
-		
-		List<Agent> ag = iAgent.getAgentsTicketAssignedToThem(3);
-		
-		for(Agent a : ag) {
 
-			System.out.println(a.getName() + " *** ");
-			
-		}*/
-		
-		/*String d = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
-		
-		System.out.println(d);
-		System.out.println(new SimpleDateFormat("dd/MM/yyyy").parse(d));
-		System.out.println(new Date());*/
-		
-		/*check if ticket 1 assigned to agent 1 [result should be true !] */
-		/*int r = ticketRepository.ticketAlreadyAssignedToAgent(2, 3);
-		
-		System.out.println(r);*/
-		/*for (Operation o : r.getContent()) {
-			System.out.println(o.getId() + " - " + o.getName());
-		}*/
-		
-		/*List<Agent> listAgents = agentRepository.getAgentsByTeam("adm");
-		
-		for(Agent a : listAgents) {
-			System.out.println(a.getName());
-		}*/
-		
-		/*
-		List<Agent> agents = iAdmin.searchAgents("age", 0, 7).getContent();
-		
-		 
-		for(Agent a : agents) {
-			
-			System.err.println(a.getName() + " *-* ");
-			
-		}*/
-		
-		/*List<Ticket> tickets =  iAgent.searchTickets("x", 0, 5).getContent();
-		
-		
-		for(Ticket t : tickets) {
-			
-			System.out.println(t.getSubject());
-			
-		}*/
 		
 	}
 }

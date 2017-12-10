@@ -34,13 +34,8 @@
 									<li th:text="'Description : ' + ${ticket.description}"></li>
 									<li th:text="'Solution : ' + ${ticket.solution}"></li>
 									<li th:text="'Status : ' + ${ticket.status}"></li>
-<<<<<<< HEAD
 									<li th:text="'Created at : ' + ${ticket.created_at != null ? #dates.format(ticket.created_at, 'dd/MM/YYYY') : '---' }"></li>
 									<li th:text="'Updated at : ' + ${ticket.updated_at != null ? #dates.format(ticket.updated_at, 'dd/MM/YYYY') : '---' }"></li>
-=======
-									<li th:text="'Created at : ' + ${ticket.created_at != null ? #dates.format(ticket.created_at, 'DD/MM/YYYY') : '---' }"></li>
-									<li th:text="'Updated at : ' + ${ticket.updated_at != null ? #dates.format(ticket.updated_at, 'DD/MM/YYYY') : '---' }"></li>
->>>>>>> 3611e4b3dcf10afa1c903082f997d9a03bad8465
 								</ul>
 								
 								<h2>Assigned to</h2>

@@ -516,16 +516,9 @@ public class AdminController {
 	//verified
 	
 	@RequestMapping(value = "/admin/{admin_id}/delete/{component}/{component_id}", method = RequestMethod.GET)
-	
-<<<<<<< HEAD
 	String deleteComponent(Model model, @PathVariable String admin_id, @PathVariable String component, @PathVariable String component_id,
 			@RequestParam(name = "page", defaultValue = "0") String page,
 			@RequestParam(name = "size", defaultValue = "5") String size) {
-=======
-	String deleteCompany(Model model, @PathVariable String admin_id, @PathVariable String component, @PathVariable String component_id,
-			@RequestParam(name = "page", defaultValue = "0") String page,
-			@RequestParam(name = "size", defaultValue = "7") String size) {
->>>>>>> 3611e4b3dcf10afa1c903082f997d9a03bad8465
 		
 		if (component.equals("ticket")) {
 			
@@ -540,14 +533,7 @@ public class AdminController {
 		return "redirect:/admin/" + admin_id + "/show/companies";
 		
 	}
-<<<<<<< HEAD
 
-
-=======
->>>>>>> 3611e4b3dcf10afa1c903082f997d9a03bad8465
-	
-	
-	
 	
 	
 	

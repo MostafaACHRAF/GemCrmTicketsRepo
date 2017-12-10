@@ -34,14 +34,8 @@
 .ticketsStatisticsChart {
 	width:200px;
 	height:200px;
-<<<<<<< HEAD
 	position:absolute;
 	bottom:50px;
-=======
-	margin-top: 100px;
-	position:absolute;
-	bottom:70px; 
->>>>>>> 3611e4b3dcf10afa1c903082f997d9a03bad8465
 	right: 0;
 }
 
